@@ -81,7 +81,7 @@ fetch('/api/admin/dashboard/stats')
 
 ---
 
-### 4️⃣ 성능 최적화
+### 4️⃣ 성능 최적화 및 자동화
 
 ![성능 최적화](./img/성능.png)
 
@@ -105,7 +105,7 @@ const [stats, monthly, category] = await Promise.all([
 
 ---
 
-## 사용자 & 신고 관리 페이지
+## 5️⃣ 사용자 & 신고 관리 페이지
 
 ![신고 관리](./img/신고.png)
 
