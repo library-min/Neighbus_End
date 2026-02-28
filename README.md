@@ -17,19 +17,17 @@
 
 ---
 
-## 성과
+## 📊 주요 기능 & 스크린샷
 
-| 지표 | 개선 내용 |
-|------|----------|
-| **대시보드 로딩** | 3초 → 1초 (67% 개선) |
-| **관리자 작업 시간** | 5분 → 30초 (90% 단축) |
-| **모바일 대응** | 0% → 100% (모든 디바이스 지원) |
+### 1️⃣ 웹 메인페이지
+
+![메인페이지](./img/메인.png)
 
 ---
 
-## 주요 기능
+### 2️⃣ 관리자 대시보드 (통계 시각화)
 
-### 1️⃣ 관리자 대시보드 (통계 시각화)
+![관리자 대시보드](./img/대시보드.png)
 
 **설계한 것**
 - 4개의 다른 API 데이터를 하나의 화면에 표시하는 레이아웃
@@ -53,7 +51,63 @@ fetch('/api/admin/dashboard/stats')
 
 ---
 
-### 2️⃣ 사용자 & 신고 관리 페이지
+### 3️⃣ 회원 관리 시스템
+
+![회원 관리](./img/유저.png)
+
+**설계한 것**
+- 회원 목록을 테이블로 표시하는 페이지 구조
+- 검색 기능으로 빠른 회원 찾기
+- 편집/삭제 버튼으로 즉시 관리
+
+```html
+<!-- 백엔드 Thymeleaf 렌더링으로 데이터 동적 표시 -->
+<table class="table">
+  <tr th:each="user : ${users}">
+    <td th:text="${user.name}"></td>
+    <td th:text="${user.email}"></td>
+    <td>
+      <button onclick="editUser(${user.id})">편집</button>
+      <button onclick="deleteUser(${user.id})">삭제</button>
+    </td>
+  </tr>
+</table>
+```
+
+**결과**
+-  회원 검색 시간 30초 → 1초
+-  모든 관리 기능을 한 페이지에서 처리 가능
+-  모바일에서도 스크롤로 쉽게 이용 가능
+
+---
+
+### 4️⃣ 성능 최적화
+
+![성능 최적화](./img/성능.png)
+
+**성능 개선**
+- 대시보드 로딩 시간: **3초 → 1초 (67% 개선)**
+- 관리자 작업 시간: **5분 → 30초 (90% 단축)**
+
+**기술 구현**
+```javascript
+// Promise.all()로 API 동시 호출
+const [stats, monthly, category] = await Promise.all([
+  fetch('/api/admin/dashboard/stats'),
+  fetch('/api/admin/dashboard/monthly-signups'),
+  fetch('/api/admin/dashboard/gatherings-by-category')
+]);
+```
+
+**결과**
+- API 병렬 처리로 로딩 시간 단축
+- AJAX로 불필요한 페이지 새로고침 제거
+
+---
+
+## 사용자 & 신고 관리 페이지
+
+![신고 관리](./img/신고.png)
 
 **설계한 것**
 - 신고 목록을 표시하고, Modal UI로 즉시 정지 처리하는 인터페이스
@@ -84,31 +138,13 @@ function blockUser(reportId) {
 
 ---
 
-### 3️⃣ 회원/콘텐츠 관리 페이지
+## 성과
 
-**설계한 것**
-- 회원 목록을 테이블로 표시하는 페이지 구조
-- 검색 기능으로 빠른 회원 찾기
-- 편집/삭제 버튼으로 즉시 관리
-
-```html
-<!-- 백엔드 Thymeleaf 렌더링으로 데이터 동적 표시 -->
-<table class="table">
-  <tr th:each="user : ${users}">
-    <td th:text="${user.name}"></td>
-    <td th:text="${user.email}"></td>
-    <td>
-      <button onclick="editUser(${user.id})">편집</button>
-      <button onclick="deleteUser(${user.id})">삭제</button>
-    </td>
-  </tr>
-</table>
-```
-
-**결과**
--  회원 검색 시간 30초 → 1초
--  모든 관리 기능을 한 페이지에서 처리 가능
--  모바일에서도 스크롤로 쉽게 이용 가능
+| 지표 | 개선 내용 |
+|------|----------|
+| **대시보드 로딩** | 3초 → 1초 (67% 개선) |
+| **관리자 작업 시간** | 5분 → 30초 (90% 단축) |
+| **모바일 대응** | 0% → 100% (모든 디바이스 지원) |
 
 ---
 
